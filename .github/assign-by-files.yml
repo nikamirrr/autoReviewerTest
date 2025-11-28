@@ -1,9 +1,6 @@
----
-"scripts/*":
+scripts/*:
   - nikamirrr
-
-"scripts/test/**":
+scripts/test/**:
   - nikamirrr
-
-"docker/**":
+docker/**:
   - nikamirrr
