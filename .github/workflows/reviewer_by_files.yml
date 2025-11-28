@@ -1,6 +1,13 @@
 name: "Auto Assign"
 on:
-  - pull_request
+  pull_request:
+    branches:
+      - 'master'
+      - 'main'
+      - '202[0-9][0-9][0-9]'
+
+permissions:
+  pull-requests: write
 
 jobs:
   assign_reviewer:
