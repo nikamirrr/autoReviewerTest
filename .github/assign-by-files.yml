@@ -1,10 +1,9 @@
 ---
 "scripts/**":
   - nikamirrr
-  - nikamirrrgwptd
-  - wangxin
-  - yxieca
+
+"scripts/test/**":
+  - nikamirrr
 
 "docker/**":
-  - wangxin
-  - yxieca
+  - nikamirrr
