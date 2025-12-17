@@ -24,7 +24,7 @@ try:
     # Request reviews
     # The method takes two lists: 'reviewers' (users) and 'team_reviewers' (teams)
     users_to_add = ['nikamirrrgwptd']
-    pr.requested_reviewers(reviewers=users_to_add)
+    pr.create_review_request(reviewers=users_to_add)
     print(f"Successfully requested reviews for PR #{pr.number} from users: {users_to_add}")
 
 except Exception as e:
