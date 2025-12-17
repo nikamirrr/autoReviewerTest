@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --upgrade pip pyaml PyGithub
       - name: Check Python version
-        run: python3 --version
+        run: env
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
       - name: Cleanup the checked out repo
         run: git clean -fdx
