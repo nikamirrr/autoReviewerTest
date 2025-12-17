@@ -18,7 +18,7 @@ pr = repo.get_pull(PR_NUMBER)
 changed_files = pr.get_files()
 
 print(pr)
-print(changed_files)
+print(list(changed_files))
 
 try:
     # Request reviews
