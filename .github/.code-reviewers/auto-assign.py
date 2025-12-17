@@ -1,6 +1,6 @@
 import os
 import yaml
 
-from github import GitHub
+from github import Github
 
 print(os.environ)
