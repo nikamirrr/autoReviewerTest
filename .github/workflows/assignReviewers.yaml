@@ -24,6 +24,7 @@ jobs:
         run: python .github/.code-reviewers/auto-assign.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.action_repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           CONTRIBUTOR_INDEX: file2.yaml
           
