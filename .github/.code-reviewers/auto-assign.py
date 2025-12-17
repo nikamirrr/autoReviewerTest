@@ -19,7 +19,7 @@ changed_files = pr.get_files()
 
 print(pr)
 print(list(changed_files))
-
+dir(pr)
 try:
     # Request reviews
     # The method takes two lists: 'reviewers' (users) and 'team_reviewers' (teams)
