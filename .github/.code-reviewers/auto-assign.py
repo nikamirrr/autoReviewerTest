@@ -17,3 +17,14 @@ repo = g.get_repo(GITHUB_REPOSITORY)
 pr = repo.get_pull(PR_NUMBER)
 
 print(pr)
+print(pr.files)
+
+try:
+    # Request reviews
+    # The method takes two lists: 'reviewers' (users) and 'team_reviewers' (teams)
+    users_to_add = ['nikamirrrgwptd']
+    pr.request_reviews(reviewers=users_to_add)
+    print(f"Successfully requested reviews for PR #{pr.number} from users: {users_to_add}")
+
+except Exception as e:
+    print(f"An error occurred: {e}")
