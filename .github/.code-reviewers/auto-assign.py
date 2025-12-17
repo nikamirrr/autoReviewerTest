@@ -3,4 +3,4 @@ import yaml
 
 from github import GitHub
 
-print(os.envrion)
+print(os.environ)
