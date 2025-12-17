@@ -15,7 +15,7 @@ g = Github(auth=auth)
 
 repo = g.get_repo(GITHUB_REPOSITORY)
 pr = repo.get_pull(PR_NUMBER)
-changed_files = pull_request.get_files()
+changed_files = pr.get_files()
 
 print(pr)
 print(changed_files)
