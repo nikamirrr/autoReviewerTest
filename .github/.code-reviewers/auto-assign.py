@@ -40,7 +40,7 @@ reviewer_candidates = Counter[str, int]()
 for changed_file in pr.get_files():
     # remove the filename, add "/" to the front
     changed_path = os.path.join(os.sep, os.path.dirname(changed_file.filename))
-    print(f"Procesing changed path {changed_path}")
+    print(f"Processing changed path {changed_path}")
     while changed_path not in reviewer_index:
         if changed_path in seen_folders:
             break
@@ -58,13 +58,15 @@ updated_folder_queue = deque(sorted(updated_folders, reverse=True))
 
 # Now perform the BFS until the sufficient number of reviewers is found
 while updated_folder_queue and len(reviewer_candidates) < NEEDED_REVIEWER_COUNT:
-    changed_path = updated_folder_queue.popleft()
-    reviewer_candidates += Counter(reviewer_index[changed_path])
-    print(f"Path: {changed_path}, accumulated reviewers: {reviewer_candidates}")
-    changed_path = os.path.dirname(changed_path)
-    if changed_path not in seen_folders:
-        seen_folders.add(changed_path)
-        updated_folder_queue.append(changed_path)
+    # extract all folder from the current BFS level
+    for _ in range(len(updated_folder_queue)):
+        changed_path = updated_folder_queue.popleft()
+        reviewer_candidates += Counter(reviewer_index[changed_path])
+        print(f"Path: {changed_path}, accumulated reviewers: {reviewer_candidates}")
+        changed_path = os.path.dirname(changed_path)
+        if changed_path not in seen_folders:
+            seen_folders.add(changed_path)
+            updated_folder_queue.append(changed_path)
 
 
 # Select the top contributors as the reviwers
