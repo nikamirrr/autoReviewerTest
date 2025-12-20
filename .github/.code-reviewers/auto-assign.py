@@ -23,6 +23,8 @@ g = Github(auth=auth)
 
 # Load the reviewer index
 reviewer_index = yaml.safe_load(open(REVIEWER_INDEX))
+# clean-up the trailing "/" from the paths
+reviewer_index = {repo_path.rstrip(os.sep) if repo_path != os.sep else repo_path: contributors for repo_path, contributors in reviewer_index.items()}
 # Load the reop and PR information
 repo = g.get_repo(GITHUB_REPOSITORY)
 pr = repo.get_pull(PR_NUMBER)
