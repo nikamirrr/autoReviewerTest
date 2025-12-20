@@ -35,8 +35,10 @@ updated_folders = []
 reviewer_candidates = Counter[str, int]()
 
 # First bring each changed path to where any reviwer exists
-for changed_path in pr.get_files():
-    changed_path = os.path.dirname(changed_path)
+for changed_file in pr.get_files():
+    print(changed_file)
+    print(dir(changed_file))
+    changed_path = os.path.dirname(changed_file.filename)
     while changed_path not in reviewer_index:
         if changed_path in seen_folders:
             break
