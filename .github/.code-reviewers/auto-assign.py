@@ -38,11 +38,13 @@ reviewer_candidates = Counter[str, int]()
 for changed_file in pr.get_files():
     # remove the filename, add "/" to the front
     changed_path = os.path.join(os.sep, os.path.dirname(changed_file.filename))
+    print(f"Procesing changed path {changed_path}")
     while changed_path not in reviewer_index:
         if changed_path in seen_folders:
             break
         seen_folders.add(changed_path)
         changed_path = os.path.dirname(changed_path)
+        print(f"Going up the path {changed_path}")
     else:
         # Found the lowest level contributors
         # Finished the loop without breaking
