@@ -13,7 +13,7 @@ REVIEWER_INDEX = os.environ["REVIEWER_INDEX"]
 NEEDED_REVIEWER_COUNT = int(os.environ.get("NEEDED_REVIEWER_COUNT", 3))
 INCLUDE_CONTRIBUTORS_TIES = os.environ.get(
     "INCLUDE_CONTRIBUTORS_TIES", "False"
-).lower() in ("true", "1", "yes", "y", "on", "enabled")
+).lower() in ("true", "t", "1", "yes", "y", "on", "enabled")
 
 # using an access token
 auth = Auth.Token(GITHUB_TOKEN)
@@ -24,7 +24,10 @@ g = Github(auth=auth)
 # Load the reviewer index
 reviewer_index = yaml.safe_load(open(REVIEWER_INDEX))
 # clean-up the trailing "/" from the paths
-reviewer_index = {repo_path.rstrip(os.sep) if repo_path != os.sep else repo_path: contributors for repo_path, contributors in reviewer_index.items()}
+reviewer_index = {
+    repo_path.rstrip(os.sep) if repo_path != os.sep else repo_path: contributors
+    for repo_path, contributors in reviewer_index.items()
+}
 # Load the reop and PR information
 repo = g.get_repo(GITHUB_REPOSITORY)
 pr = repo.get_pull(PR_NUMBER)
