@@ -36,12 +36,12 @@ reviewer_candidates = Counter[str, int]()
 
 # First bring each changed path to where any reviwer exists
 for changed_path in pr.get_files():
-    changed_path = os.dirname(changed_path)
+    changed_path = os.path.dirname(changed_path)
     while changed_path not in reviewer_index:
         if changed_path in seen_folders:
             break
         seen_folders.add(changed_path)
-        changed_path = os.dirname(changed_path)
+        changed_path = os.path.dirname(changed_path)
     else:
         # Found the lowest level contributors
         # Finished the loop without breaking
@@ -54,7 +54,7 @@ updated_folder_queue = deque(sorted(updated_folders, reverse=True))
 while updated_folder_queue and len(reviewer_candidates) < NEEDED_REVIEWER_COUNT:
     changed_path = updated_folder_queue.popleft()
     reviewer_candidates += Counter(reviewer_index[changed_path])
-    changed_path = os.dirname(changed_path)
+    changed_path = os.path.dirname(changed_path)
     if changed_path not in seen_folders:
         seen_folders.add(changed_path)
         updated_folder_queue.append(changed_path)
