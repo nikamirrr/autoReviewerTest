@@ -13,7 +13,7 @@ REVIEWER_INDEX = os.environ["REVIEWER_INDEX"]
 NEEDED_REVIEWER_COUNT = int(os.environ.get("NEEDED_REVIEWER_COUNT", 3))
 INCLUDE_CONTRIBUTORS_TIES = os.environ.get(
     "INCLUDE_CONTRIBUTORS_TIES", "False"
-).lower() in ("true", "t", "1", "yes", "y", "on", "enabled")
+).strip().lower() not in ("", "false", "f", "0", "no", "n", "off", "disabled")
 
 # using an access token
 auth = Auth.Token(GITHUB_TOKEN)
@@ -48,6 +48,8 @@ for changed_file in pr.get_files():
         if changed_path in seen_folders:
             break
         seen_folders.add(changed_path)
+        if changed_path == os.sep:
+            break
         changed_path = os.path.dirname(changed_path)
         print(f"Going up the path {changed_path}")
     else:
@@ -66,10 +68,12 @@ while updated_folder_queue and len(reviewer_candidates) < NEEDED_REVIEWER_COUNT:
         changed_path = updated_folder_queue.popleft()
         reviewer_candidates += Counter(reviewer_index[changed_path])
         print(f"Path: {changed_path}, accumulated reviewers: {reviewer_candidates}")
-        changed_path = os.path.dirname(changed_path)
-        if changed_path not in seen_folders:
-            seen_folders.add(changed_path)
-            updated_folder_queue.append(changed_path)
+        # do not try to go above the root
+        if changed_path != os.sep:
+            changed_path = os.path.dirname(changed_path)
+            if changed_path not in seen_folders:
+                seen_folders.add(changed_path)
+                updated_folder_queue.append(changed_path)
 
 
 # Select the top contributors as the reviwers
