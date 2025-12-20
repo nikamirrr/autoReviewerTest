@@ -47,6 +47,7 @@ for changed_file in pr.get_files():
         # Found the lowest level contributors
         # Finished the loop without breaking
         updated_folders.append(changed_path)
+print(f"Folders with contributors {updated_folders}")
 
 # Populate the the queue with the most specific folders ad the beginning
 updated_folder_queue = deque(sorted(updated_folders, reverse=True))
@@ -55,6 +56,7 @@ updated_folder_queue = deque(sorted(updated_folders, reverse=True))
 while updated_folder_queue and len(reviewer_candidates) < NEEDED_REVIEWER_COUNT:
     changed_path = updated_folder_queue.popleft()
     reviewer_candidates += Counter(reviewer_index[changed_path])
+    print(f"Path: {changed_path}, accumulated reviewers: {reviewer_candidates}")
     changed_path = os.path.dirname(changed_path)
     if changed_path not in seen_folders:
         seen_folders.add(changed_path)
