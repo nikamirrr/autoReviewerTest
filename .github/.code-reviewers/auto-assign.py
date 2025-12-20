@@ -36,9 +36,8 @@ reviewer_candidates = Counter[str, int]()
 
 # First bring each changed path to where any reviwer exists
 for changed_file in pr.get_files():
-    print(changed_file)
-    print(dir(changed_file))
-    changed_path = os.path.dirname(changed_file.filename)
+    # remove the filename, add "/" to the front
+    changed_path = os.path.join(os.sep, os.path.dirname(changed_file.filename))
     while changed_path not in reviewer_index:
         if changed_path in seen_folders:
             break
